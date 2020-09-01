@@ -8,20 +8,27 @@ public class Order {
 	// Esse tipo BigDecimal representa um ponto flutuante,
 	// que permite ter melhor precisão nas casas decimais
 	private final BigDecimal amount;
+	private final String email;
 
-	public Order(String userId, String orderId, BigDecimal amount) {
+	public Order(String userId, String orderId, BigDecimal amount, String email) {
 		this.userId = userId;
 		this.orderId = orderId;
 		this.amount = amount;
+		this.email = email;
 	}
 
 	@Override
 	public String toString() {
-		return "Order [userId=" + userId + ", orderId=" + orderId + ", amount=" + String.format("%.2f", amount) + "]";
+		return "Order [userId=" + userId + ", orderId=" + orderId + ", amount=" + String.format("%.2f", amount)
+				+ ", email=" + email + "]";
 	}
 
+	public String getUserId() {
+		return userId;
+	}
+	
 	public String getEmail() {
-		return "email";
+		return email;
 	}
 
 }

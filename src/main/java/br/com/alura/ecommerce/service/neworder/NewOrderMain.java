@@ -5,7 +5,6 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import br.com.alura.ecommerce.common.kafka.KafkaDispatcher;
-import br.com.alura.ecommerce.service.fraud.detector.Order;
 
 // PRODUCER
 // Classe responsável por produzir uma mensagem que será enviada ao tópico ECOMMERCE_NEW_ORDER(NOVO_PEDIDO).
@@ -15,7 +14,7 @@ public class NewOrderMain {
 		// Produz uma mensagem no kafka.
 		try (var orderDispatcher = new KafkaDispatcher<Order>()){ // despacha uma Order
 			try (var emailDispatcher = new KafkaDispatcher<String>()){ // despacha uma String
-				// Laço para executar 100 mensagens
+				var email = Math.random() + "@email.com";
 				for (var i = 0; i < 10; i++) {
 	
 					// Variável que recebe uma "Universally Unique Identifier (UUID)" ou ID UNIVERSAL
@@ -24,13 +23,13 @@ public class NewOrderMain {
 					var orderId = UUID.randomUUID().toString();
 					var amount = new BigDecimal(Math.random() * 5000 + 1);
 					
-					var order = new Order(userId, orderId, amount);
+					var order = new Order(userId, orderId, amount, email);
 					orderDispatcher.send("ECOMMERCE_NEW_ORDER", userId, order);
 	
 					// Váriavel que recebe a mensagem do EMAIL
-					var email = "Thank you for your order! We are processing your order!";
+					var emailCode = "Thank you for your order! We are processing your order!";
 					// Envia um email
-					emailDispatcher.send("ECOMMERCE_SEND_EMAIL", userId, email);
+					emailDispatcher.send("ECOMMERCE_SEND_EMAIL", userId, emailCode);
 				}
 			}
 		}
