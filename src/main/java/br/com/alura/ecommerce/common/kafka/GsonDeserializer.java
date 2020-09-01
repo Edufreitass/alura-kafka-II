@@ -15,6 +15,7 @@ public class GsonDeserializer<T> implements Deserializer<T> {
 
 	private Class<T> type;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void configure(Map<String, ?> configs, boolean isKey) {
 		String typeName = String.valueOf(configs.get(TYPE_CONFIG));
